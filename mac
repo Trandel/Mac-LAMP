@@ -141,6 +141,7 @@ mySitesDir="$HOME/Sites"
 
 myConf="<Directory \"$mySitesDir\">
   Options Indexes MultiViews FollowSymLinks
+  Require all granted
   AllowOverride All
   Order allow,deny
   Allow from all
