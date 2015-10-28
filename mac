@@ -169,8 +169,8 @@ sudo mkdir -p "$(brew --prefix)/etc/resolver"
 sudo sh -c "echo 'address=/.dev/127.0.0.1' > $(brew --prefix)/etc/dnsmasq.conf"
 sudo sh -c "echo 'nameserver 127.0.0.1' > $(brew --prefix)/etc/resolver/dev"
 
-sudo sed -i 's/#LoadModule php5_module/LoadModule php5_module/g' /private/etc/apache2/httpd.conf
-sudo sed -i 's/#LoadModule vhost_alias_module/LoadModule vhost_alias_module/g' /private/etc/apache2/httpd.conf
+sudo sed -i '' 's/#LoadModule php5_module/LoadModule php5_module/g' /private/etc/apache2/httpd.conf
+sudo sed -i '' 's/#LoadModule vhost_alias_module/LoadModule vhost_alias_module/g' /private/etc/apache2/httpd.conf
 
 #apacheConf=`apachectl -V | grep -o 'SERVER_CONFIG_FILE=".*"'| sed 's/"//g' | sed 's/SERVER_CONFIG_FILE=//g'`
 #fancy_echo $apacheConf
