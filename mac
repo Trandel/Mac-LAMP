@@ -121,22 +121,6 @@ brew_install_or_upgrade 'dnsmasq'
 brew_install_or_upgrade 'mysql'
 brew_install_or_upgrade 'phpmyadmin'
 
-fancy_echo "Installing tools using cask ..."
-
-#install some tools
-brew cask install google-chrome
-brew cask install firefox
-brew cask install sourcetree
-brew cask install filezilla
-brew cask install sublime-text
-brew cask install adobe-creative-cloud
-brew cask install adobe-photoshop-cc
-brew cask install adobe-indesign-cc
-brew cask install adobe-illustrator-cc
-brew cask install adobe-reader
-brew cask install sequel-pro
-brew cask install netbeans-php
-
 npm install -g less
 npm install -g grunt-cli
 
@@ -198,6 +182,22 @@ brew_launchctl_restart 'dnsmasq'
 fancy_echo "Restarting apache (sudo password might be needed) ..."
 
 sudo apachectl restart
+
+fancy_echo "Installing tools using cask ..."
+
+#install some tools
+brew cask install google-chrome
+brew cask install firefox
+brew cask install sourcetree
+brew cask install filezilla
+brew cask install sublime-text
+brew cask install adobe-creative-cloud
+brew cask install adobe-photoshop-cc
+brew cask install adobe-indesign-cc
+brew cask install adobe-illustrator-cc
+brew cask install adobe-reader
+brew cask install sequel-pro
+brew cask install netbeans-php
 
 #run custom user stuff
 if [ -f "$HOME/.laptop.local" ]; then
