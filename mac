@@ -83,10 +83,10 @@ brew_launchctl_restart() {
 gem_install_or_update() {
   if gem list "$1" --installed > /dev/null; then
     fancy_echo "Updating %s ..." "$1"
-    sudo gem update "$@"
+    sudo gem update -n /usr/local/bin "$@"
   else
     fancy_echo "Installing %s ..." "$1"
-    sudo gem install "$@"
+    sudo gem install -n /usr/local/bin "$@"
   fi
 }
 
