@@ -6,8 +6,11 @@ Laptop is a script to set up an OS X laptop for web development (LAMP).
 It can be run multiple times on the same machine safely.
 It installs, upgrades, or skips packages
 based on what is already installed on the machine.
+Unfortunately we need some sudo commands for apache config, so the script might ask for your password to use sudo.
 
 This is a modified version of https://github.com/thoughtbot/laptop/
+
+Thanks guys for all the hard work and inspiration for me to create my own version.
 
 Requirements
 ------------
@@ -24,17 +27,11 @@ versions are welcome.
 Install
 -------
 
-Download, review, then execute the script:
+Download and execute the script:
 
 ```sh
-curl --remote-name https://raw.githubusercontent.com/thoughtbot/laptop/master/mac
-less mac
-sh mac 2>&1 | tee ~/laptop.log
+curl --remote-name https://raw.githubusercontent.com/trandel/mac-lamp/master/mac && sh mac 2>&1 | tee ~/laptop.log
 ```
-
-Optionally, [install thoughtbot/dotfiles][dotfiles].
-
-[dotfiles]: https://github.com/thoughtbot/dotfiles#install
 
 Debugging
 ---------
@@ -42,7 +39,7 @@ Debugging
 Your last Laptop run will be saved to `~/laptop.log`.
 Read through it to see if you can debug the issue yourself.
 If not, copy the lines where the script failed into a
-[new GitHub Issue](https://github.com/thoughtbot/laptop/issues/new) for us.
+[new GitHub Issue](https://github.com/trandel/mac-lamp/issues/new) for us.
 Or, attach the whole log file as an attachment.
 
 OS X El Capitan (10.11)
@@ -146,33 +143,13 @@ brew install shellcheck
 
 Thank you, [contributors]!
 
-[contributors]: https://github.com/thoughtbot/laptop/graphs/contributors
-
-By participating in this project,
-you agree to abide by the thoughtbot [code of conduct].
-
-[code of conduct]: https://thoughtbot.com/open-source-code-of-conduct
+[contributors]: https://github.com/trandel/mac-lamp/graphs/contributors
 
 License
 -------
 
-Laptop is © 2011-2015 thoughtbot, inc.
+Laptop is © 2015 TNT-IT ltd.
 It is free software,
 and may be redistributed under the terms specified in the [LICENSE] file.
 
 [LICENSE]: LICENSE
-
-About thoughtbot
-----------------
-
-![thoughtbot](https://thoughtbot.com/logo.png)
-
-Laptop is maintained and funded by thoughtbot, inc.
-The names and logos for thoughtbot are trademarks of thoughtbot, inc.
-
-We are passionate about open source software.
-See [our other projects][community].
-We are [available for hire][hire].
-
-[community]: https://thoughtbot.com/community?utm_source=github
-[hire]: https://thoughtbot.com?utm_source=github
