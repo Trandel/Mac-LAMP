@@ -126,7 +126,7 @@ npm install -g grunt-cli
 
 fancy_echo "Updating and installing Ruby gems ..."
 
-gem update --system
+sudo gem update --system
 gem_install_or_update 'sass'
 gem_install_or_update 'compass'
 
@@ -191,13 +191,13 @@ brew cask install firefox
 brew cask install sourcetree
 brew cask install filezilla
 brew cask install sublime-text
-brew cask install adobe-creative-cloud
+# brew cask install adobe-creative-cloud
 # brew cask install adobe-photoshop-cc
 # brew cask install adobe-indesign-cc
 # brew cask install adobe-illustrator-cc
 brew cask install adobe-reader
 brew cask install sequel-pro
-brew cask install netbeans-php
+# brew cask install netbeans-php
 
 #run custom user stuff
 if [ -f "$HOME/.laptop.local" ]; then
