@@ -141,18 +141,35 @@ mySitesDir="$HOME/Sites"
 
 myConf="<Directory \"$mySitesDir\">
   Options Indexes MultiViews FollowSymLinks
-  Require all granted
   AllowOverride All
-  Order allow,deny
-  Allow from all
+  <IfModule mod_authz_core.c>
+    Require all granted
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Allow from all
+  </IfModule>
 </Directory>
 
 <Virtualhost *:80>
   VirtualDocumentRoot \"$mySitesDir/%1\"
-  ServerName sites.dev
-  ServerAlias *.dev
+  ServerName sites.local
+  ServerAlias *.local
   UseCanonicalName Off
 </Virtualhost>
+
+Alias /phpmyadmin /usr/local/share/phpmyadmin
+<Directory /usr/local/share/phpmyadmin/>
+  Options Indexes FollowSymLinks MultiViews
+  AllowOverride All
+  <IfModule mod_authz_core.c>
+    Require all granted
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Allow from all
+  </IfModule>
+</Directory>
 "
 
 #check the user apache config
@@ -167,8 +184,8 @@ fi
 sudo sh -c "echo '$myConf' > $myConfFile"
 
 sudo mkdir -p "$(brew --prefix)/etc/resolver"
-sudo sh -c "echo 'address=/.dev/127.0.0.1' > $(brew --prefix)/etc/dnsmasq.conf"
-sudo sh -c "echo 'nameserver 127.0.0.1' > $(brew --prefix)/etc/resolver/dev"
+sudo sh -c "echo 'address=/.local/127.0.0.1' > $(brew --prefix)/etc/dnsmasq.conf"
+sudo sh -c "echo 'nameserver 127.0.0.1' > $(brew --prefix)/etc/resolver/local"
 
 sudo sed -i '' 's/#LoadModule php5_module/LoadModule php5_module/g' /private/etc/apache2/httpd.conf
 sudo sed -i '' 's/#LoadModule vhost_alias_module/LoadModule vhost_alias_module/g' /private/etc/apache2/httpd.conf

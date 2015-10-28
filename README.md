@@ -12,6 +12,18 @@ This is a modified version of https://github.com/thoughtbot/laptop/
 
 Thanks guys for all the hard work and inspiration for me to create my own version.
 
+Usage
+-----
+
+The script will aim to creat an development environment inside this folder:
+/User/USERNAME/Sites/.
+
+Every folder you create inside can be accessed through .local domain.
+
+Example:
+
+my-new-site.local => /User/USERNAME/Sites/my-new-site/
+
 Requirements
 ------------
 
