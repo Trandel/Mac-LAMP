@@ -18,11 +18,11 @@ Usage
 The script will aim to create an development environment inside this folder:
 `/User/USERNAME/Sites/`.
 
-Every folder you create inside can be accessed through `.local` domain.
+Every folder you create inside can be accessed through `.localhost` domain.
 
 Example:
 
-`my-new-site.local => /User/USERNAME/Sites/my-new-site/`
+`my-new-site.localhost => /User/USERNAME/Sites/my-new-site/`
 
 Requirements
 ------------
