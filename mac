@@ -153,8 +153,8 @@ myConf="<Directory \"$mySitesDir\">
 
 <Virtualhost *:80>
   VirtualDocumentRoot \"$mySitesDir/%1\"
-  ServerName sites.local
-  ServerAlias *.local
+  ServerName sites.localhost
+  ServerAlias *.localhost
   UseCanonicalName Off
 </Virtualhost>
 
