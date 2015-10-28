@@ -130,7 +130,7 @@ sudo gem update --system
 gem_install_or_update 'sass'
 gem_install_or_update 'compass'
 
-fancy_echo "Configuring apache (sudo password needed) ..."
+fancy_echo "Configuring apache ..."
 
 #config apache and dnsmasq
 
@@ -171,7 +171,8 @@ sudo sh -c "echo 'nameserver 127.0.0.1' > $(brew --prefix)/etc/resolver/dev"
 
 sudo sed -i '' 's/#LoadModule php5_module/LoadModule php5_module/g' /private/etc/apache2/httpd.conf
 sudo sed -i '' 's/#LoadModule vhost_alias_module/LoadModule vhost_alias_module/g' /private/etc/apache2/httpd.conf
-
+sudo sed -i '' 's/Include \/private\/etc\/apache2\/users\/*.conf//g' /private/etc/apache2/httpd.conf
+sudo sh -c "echo 'Include /private/etc/apache2/users/*.conf' >> /private/etc/apache2/httpd.conf"
 #apacheConf=`apachectl -V | grep -o 'SERVER_CONFIG_FILE=".*"'| sed 's/"//g' | sed 's/SERVER_CONFIG_FILE=//g'`
 #fancy_echo $apacheConf
 
@@ -179,7 +180,7 @@ sudo sed -i '' 's/#LoadModule vhost_alias_module/LoadModule vhost_alias_module/g
 brew_launchctl_restart 'mysql'
 brew_launchctl_restart 'dnsmasq'
 
-fancy_echo "Restarting apache (sudo password might be needed) ..."
+fancy_echo "Restarting apache ..."
 
 sudo apachectl restart
 
