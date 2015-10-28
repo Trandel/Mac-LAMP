@@ -192,9 +192,9 @@ brew cask install sourcetree
 brew cask install filezilla
 brew cask install sublime-text
 brew cask install adobe-creative-cloud
-brew cask install adobe-photoshop-cc
-brew cask install adobe-indesign-cc
-brew cask install adobe-illustrator-cc
+# brew cask install adobe-photoshop-cc
+# brew cask install adobe-indesign-cc
+# brew cask install adobe-illustrator-cc
 brew cask install adobe-reader
 brew cask install sequel-pro
 brew cask install netbeans-php
