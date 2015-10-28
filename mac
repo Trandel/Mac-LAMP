@@ -111,6 +111,8 @@ brew update
 fancy_echo "Installing Homebrew packages ..."
 
 brew_tap 'caskroom/cask'
+brew_tap 'homebrew/dupes'
+brew_tap 'homebrew/homebrew-php'
 brew_install_or_upgrade 'brew-cask'
 brew_install_or_upgrade 'git'
 brew_install_or_upgrade 'node'
