@@ -163,11 +163,11 @@ if [ ! -d "$mySitesDir" ]; then
   mkdir "$mySitesDir"
 fi
 
-sudo echo "$myConf" > $myConfFile
+sudo "echo $myConf > $myConfFile"
 
 sudo mkdir -p "$(brew --prefix)/etc/resolver"
-sudo echo 'address=/.dev/127.0.0.1' > $(brew --prefix)/etc/dnsmasq.conf
-sudo echo "nameserver 127.0.0.1" > $(brew --prefix)/etc/resolver/dev
+sudo "echo 'address=/.dev/127.0.0.1' > $(brew --prefix)/etc/dnsmasq.conf"
+sudo "echo 'nameserver 127.0.0.1' > $(brew --prefix)/etc/resolver/dev"
 
 sudo sed -i 's/#LoadModule php5_module/LoadModule php5_module/g' /private/etc/apache2/httpd.conf
 sudo sed -i 's/#LoadModule vhost_alias_module/LoadModule vhost_alias_module/g' /private/etc/apache2/httpd.conf
