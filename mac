@@ -1,36 +1,26 @@
 #!/bin/sh
 
-# Welcome to the thoughtbot laptop script!
+# Welcome to the trandel's laptop script!
 # Be prepared to turn your laptop (or desktop, no haters here)
-# into an awesome development machine.
+# into an awesome development machine (LAMP).
 
 fancy_echo() {
   local fmt="$1"; shift
 
   # shellcheck disable=SC2059
-  printf "\n$fmt\n" "$@"
+  printf "\n\033[32;1m$fmt\n\033[0m" "$@"
 }
 
-append_to_zshrc() {
-  local text="$1" zshrc
+append_to_log() {
+  local text="$1"
   local skip_new_line="${2:-0}"
 
-  if [ -w "$HOME/.zshrc.local" ]; then
-    zshrc="$HOME/.zshrc.local"
+  if [ "$skip_new_line" -eq 1 ]; then
+    printf "%s\n" "$text"
   else
-    zshrc="$HOME/.zshrc"
-  fi
-
-  if ! grep -Fqs "$text" "$zshrc"; then
-    if [ "$skip_new_line" -eq 1 ]; then
-      printf "%s\n" "$text" >> "$zshrc"
-    else
-      printf "\n%s\n" "$text" >> "$zshrc"
-    fi
+    printf "\n%s\n" "$text"
   fi
 }
-
-trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
 set -e
 
@@ -38,20 +28,8 @@ if [ ! -d "$HOME/.bin/" ]; then
   mkdir "$HOME/.bin"
 fi
 
-if [ ! -f "$HOME/.zshrc" ]; then
-  touch "$HOME/.zshrc"
-fi
-
 # shellcheck disable=SC2016
-append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
-
-case "$SHELL" in
-  */zsh) : ;;
-  *)
-    fancy_echo "Changing your shell to zsh ..."
-      chsh -s "$(which zsh)"
-    ;;
-esac
+# append_to_log 'export PATH="$HOME/.bin:$PATH"'
 
 brew_install_or_upgrade() {
   if brew_is_installed "$1"; then
@@ -109,7 +87,6 @@ gem_install_or_update() {
   else
     fancy_echo "Installing %s ..." "$1"
     gem install "$@"
-    rbenv rehash
   fi
 }
 
@@ -118,10 +95,10 @@ if ! command -v brew >/dev/null; then
     curl -fsS \
       'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
 
-    append_to_zshrc '# recommended by brew doctor'
+    append_to_log '# recommended by brew doctor'
 
     # shellcheck disable=SC2016
-    append_to_zshrc 'export PATH="/usr/local/bin:$PATH"' 1
+    append_to_log 'export PATH="/usr/local/bin:$PATH"' 1
 
     export PATH="/usr/local/bin:$PATH"
 else
@@ -131,58 +108,96 @@ fi
 fancy_echo "Updating Homebrew formulas ..."
 brew update
 
-brew_install_or_upgrade 'zsh'
+fancy_echo "Installing Homebrew packages ..."
+
+brew_tap 'caskroom/cask'
+brew_install_or_upgrade 'brew-cask'
 brew_install_or_upgrade 'git'
-brew_install_or_upgrade 'postgres'
-brew_launchctl_restart 'postgresql'
-brew_install_or_upgrade 'redis'
-brew_launchctl_restart 'redis'
-brew_install_or_upgrade 'the_silver_searcher'
-brew_install_or_upgrade 'vim'
-brew_install_or_upgrade 'ctags'
-brew_install_or_upgrade 'tmux'
-brew_install_or_upgrade 'reattach-to-user-namespace'
-brew_install_or_upgrade 'imagemagick'
-brew_install_or_upgrade 'qt'
-brew_install_or_upgrade 'hub'
 brew_install_or_upgrade 'node'
+brew_install_or_upgrade 'imagemagick'
+brew_install_or_upgrade 'dnsmasq'
+brew_install_or_upgrade 'mysql'
+brew_install_or_upgrade 'phpmyadmin'
 
-brew_install_or_upgrade 'rbenv'
-brew_install_or_upgrade 'ruby-build'
+fancy_echo "Installing tools using cask ..."
 
-# shellcheck disable=SC2016
-append_to_zshrc 'eval "$(rbenv init - --no-rehash zsh)"' 1
+#install some tools
+brew cask install google-chrome
+brew cask install firefox
+brew cask install sourcetree
+brew cask install filezilla
+brew cask install sublime-text
+brew cask install adobe-creative-cloud
+brew cask install adobe-photoshop-cc
+brew cask install adobe-indesign-cc
+brew cask install adobe-illustrator-cc
+brew cask install adobe-reader
+brew cask install sequel-pro
+brew cask install netbeans-php
 
-brew_install_or_upgrade 'openssl'
-brew unlink openssl && brew link openssl --force
-brew_install_or_upgrade 'libyaml'
+npm install -g less
+npm install -g grunt-cli
 
-ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
-
-eval "$(rbenv init - zsh)"
-
-if ! rbenv versions | grep -Fq "$ruby_version"; then
-  rbenv install -s "$ruby_version"
-fi
-
-rbenv global "$ruby_version"
-rbenv shell "$ruby_version"
+fancy_echo "Updating and installing Ruby gems ..."
 
 gem update --system
+gem_install_or_update 'sass'
+gem_install_or_update 'compass'
 
-gem_install_or_update 'bundler'
+fancy_echo "Configuring apache (sudo password needed) ..."
 
-fancy_echo "Configuring Bundler ..."
-  number_of_cores=$(sysctl -n hw.ncpu)
-  bundle config --global jobs $((number_of_cores - 1))
+#config apache and dnsmasq
 
-brew_install_or_upgrade 'heroku-toolbelt'
+me=$(whoami)
 
-if ! command -v rcup >/dev/null; then
-  brew_tap 'thoughtbot/formulae'
-  brew_install_or_upgrade 'rcm'
+myConfFile="/private/etc/apache2/users/$me.conf"
+mySitesDir="$HOME/Sites"
+
+myConf="<Directory \"$mySitesDir\">
+  Options Indexes MultiViews FollowSymLinks
+  AllowOverride All
+  Order allow,deny
+  Allow from all
+</Directory>
+
+<Virtualhost *:80>
+  VirtualDocumentRoot \"$mySitesDir/%1\"
+  ServerName sites.dev
+  ServerAlias *.dev
+  UseCanonicalName Off
+</Virtualhost>
+"
+
+#check the user apache config
+if [ ! -f "$myConfFile" ]; then
+  touch "$myConfFile"
 fi
 
+if [ ! -d "$mySitesDir" ]; then
+  mkdir "$mySitesDir"
+fi
+
+sudo echo "$myConf" > $myConfFile
+
+sudo mkdir -p "$(brew --prefix)/etc/resolver"
+sudo echo 'address=/.dev/127.0.0.1' > $(brew --prefix)/etc/dnsmasq.conf
+sudo echo "nameserver 127.0.0.1" > $(brew --prefix)/etc/resolver/dev
+
+sudo sed -i 's/#LoadModule php5_module/LoadModule php5_module/g' /private/etc/apache2/httpd.conf
+sudo sed -i 's/#LoadModule vhost_alias_module/LoadModule vhost_alias_module/g' /private/etc/apache2/httpd.conf
+
+#apacheConf=`apachectl -V | grep -o 'SERVER_CONFIG_FILE=".*"'| sed 's/"//g' | sed 's/SERVER_CONFIG_FILE=//g'`
+#fancy_echo $apacheConf
+
+#config startup
+brew_launchctl_restart 'mysql'
+brew_launchctl_restart 'dnsmasq'
+
+fancy_echo "Restarting apache (sudo password might be needed) ..."
+
+sudo apachectl restart
+
+#run custom user stuff
 if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
 fi
