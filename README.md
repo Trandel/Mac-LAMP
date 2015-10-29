@@ -24,7 +24,7 @@ Example:
 
 `my-new-site.localhost => /User/USERNAME/Sites/my-new-site/`
 
-Note: To access phpMyAdmin append /phpmyadmin at the end of the url.
+Note: To access phpMyAdmin append `/phpmyadmin` at the end of the url.
 
 Requirements
 ------------
@@ -46,6 +46,9 @@ Download and execute the script:
 ```sh
 curl --remote-name https://raw.githubusercontent.com/trandel/mac-lamp/master/mac && sh mac 2>&1 | tee ~/laptop.log
 ```
+
+Note: You will be asked to type in your password to use `sudo` command.
+
 
 Debugging
 ---------
