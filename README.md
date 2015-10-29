@@ -66,7 +66,7 @@ installation.
 What it sets up
 ---------------
 
-# Software
+### Software
 
 * [Git] for managing git repositories
 * [Homebrew] for managing operating system libraries
@@ -96,7 +96,7 @@ What it sets up
 [Less]: http://lesscss.org/
 [Brew Cask]: http://caskroom.io/
 
-# Tools (using brew cask)
+### Tools (using brew cask)
 
 * [Google Chrome] - browser
 * [Firefox] - browser
@@ -117,12 +117,12 @@ It should take less than 30 minutes to install (depends on your machine and conn
 What files it will create and change
 ------------------------------------
 
-# Changes to `/private/etc/apache2/httpd.conf`
+### Changes to `/private/etc/apache2/httpd.conf`
 * Uncomment `#LoadModule php5_module`
 * Uncomment `#LoadModule vhost_alias_module`
 * New line `Include /private/etc/apache2/users/*.conf`
 
-# Changes to `/private/etc/apache2/users/USERNAME.conf`
+### Changes to `/private/etc/apache2/users/USERNAME.conf`
 Contents of this file will be replaced by following config:
 ```ApacheConf
 <Directory "/Users/USERNAME/Sites">
@@ -158,6 +158,14 @@ Alias /phpmyadmin /usr/local/share/phpmyadmin
 </Directory>
 ```
 
+### Changes to `$(brew --prefix)/share/phpmyadmin/config.inc.php`
+* `['AllowNoPassword']` will be set to `true`
+* `['host']` will be set to `127.0.0.1`
+
+### New files for .localhost domain set up
+* `$(brew --prefix)/etc/dnsmasq.conf` will contain `address=/.localhost/127.0.0.1`
+* `$(brew --prefix)/etc/resolver/localhost` will contain `nameserver 127.0.0.1`
+
 Customize in `~/.laptop.local`
 ------------------------------
 
@@ -167,9 +175,6 @@ For example:
 
 ```sh
 #!/bin/sh
-
-brew_tap 'caskroom/cask'
-brew_install_or_upgrade 'brew-cask'
 
 brew cask install dropbox
 brew cask install google-chrome
