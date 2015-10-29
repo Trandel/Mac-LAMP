@@ -41,7 +41,7 @@ versions are welcome.
 Install
 -------
 
-Download and execute the script:
+Download and execute the script (**As your normal User**):
 
 ```sh
 curl --remote-name https://raw.githubusercontent.com/trandel/mac-lamp/master/mac && sh mac 2>&1 | tee ~/laptop.log
