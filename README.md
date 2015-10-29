@@ -24,6 +24,8 @@ Example:
 
 `my-new-site.localhost => /User/USERNAME/Sites/my-new-site/`
 
+Note: To access phpMyAdmin append /phpmyadmin at the end of the url.
+
 Requirements
 ------------
 
