@@ -66,46 +66,97 @@ installation.
 What it sets up
 ---------------
 
-* [Bundler] for managing Ruby libraries
-* [Exuberant Ctags] for indexing files for vim tab completion
-* [Foreman] for managing web processes
-* [hub] for interacting with the GitHub API
-* [Heroku Toolbelt] for interacting with the Heroku API
+# Software
+
+* [Git] for managing git repositories
 * [Homebrew] for managing operating system libraries
 * [ImageMagick] for cropping and resizing images
 * [Node.js] and [NPM], for running apps and installing JavaScript packages
-* [Postgres] for storing relational data
-* [Qt] for headless JavaScript testing via Capybara Webkit
-* [Rbenv] for managing versions of Ruby
-* [RCM] for managing company and personal dotfiles
-* [Redis] for storing key-value data
-* [Ruby Build] for installing Rubies
+* [Mysql] for storing relational data
 * [Ruby] stable for writing general-purpose code
-* [The Silver Searcher] for finding things in files
-* [Tmux] for saving project state and switching between projects
-* [Zsh] as your shell
+* [Dnsmasq] to configure .localhost domain
+* [Phpmyadmin] for managing mysql databases
+* [Grunt] to run automated tasks
+* [Sass] to extend CSS for your projects
+* [Compass] to add additional funcions and mixins to [Sass]
+* [Less] as an alternative to [Sass]
+* [Brew Cask] to install tools and link them to your Applications folder
 
-[Bundler]: http://bundler.io/
-[Exuberant Ctags]: http://ctags.sourceforge.net/
-[Foreman]: https://github.com/ddollar/foreman
-[hub]: http://hub.github.com/
-[Heroku Toolbelt]: https://toolbelt.heroku.com/
+[Git]: https://git-scm.com/
 [Homebrew]: http://brew.sh/
 [ImageMagick]: http://www.imagemagick.org/
 [Node.js]: http://nodejs.org/
-[NPM]: https://www.npmjs.org/
-[Postgres]: http://www.postgresql.org/
-[Qt]: http://qt-project.org/
-[Rbenv]: https://github.com/sstephenson/rbenv
-[RCM]: https://github.com/thoughtbot/rcm
-[Redis]: http://redis.io/
-[Ruby Build]: https://github.com/sstephenson/ruby-build
+[Mysql]: https://www.mysql.com/
 [Ruby]: https://www.ruby-lang.org/en/
-[The Silver Searcher]: https://github.com/ggreer/the_silver_searcher
-[Tmux]: http://tmux.sourceforge.net/
-[Zsh]: http://www.zsh.org/
+[Dnsmasq]: http://www.thekelleys.org.uk/dnsmasq/doc.html
+[Phpmyadmin]: http://www.phpmyadmin.net
+[Grunt]: http://gruntjs.com/
+[Sass]: http://sass-lang.com/
+[Compass]: http://compass-style.org/
+[Less]: http://lesscss.org/
+[Brew Cask]: http://caskroom.io/
 
-It should take less than 15 minutes to install (depends on your machine).
+# Tools (using brew cask)
+
+* [Google Chrome] - browser
+* [Firefox] - browser
+* [Source Tree] - GIT client
+* [FileZilla] - FTP client
+* [Sublime Text] - Text Editor
+* [Sequel Pro] - DB management
+
+[Google Chrome]: https://www.google.com/chrome/browser/desktop/index.html
+[Firefox]: https://www.mozilla.org/en-US/firefox/desktop/
+[Source Tree]: https://www.sourcetreeapp.com/
+[FileZilla]: https://filezilla-project.org/
+[Sublime Text]: http://www.sublimetext.com/
+[Sequel Pro]: http://www.sequelpro.com/
+
+It should take less than 30 minutes to install (depends on your machine and connection speed).
+
+What files it will create and change
+------------------------------------
+
+# Changes to `/private/etc/apache2/httpd.conf`
+* Uncomment `#LoadModule php5_module`
+* Uncomment `#LoadModule vhost_alias_module`
+* New line `Include /private/etc/apache2/users/*.conf`
+
+# Changes to `/private/etc/apache2/users/USERNAME.conf`
+Contents of this file will be replaced by following config:
+```ApacheConf
+<Directory "/Users/USERNAME/Sites">
+  Options Indexes MultiViews FollowSymLinks
+  AllowOverride All
+  <IfModule mod_authz_core.c>
+    Require all granted
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Allow from all
+  </IfModule>
+</Directory>
+
+<Virtualhost *:80>
+  VirtualDocumentRoot "/Users/USERNAME/Sites/%1"
+  ServerName sites.localhost
+  ServerAlias *.localhost
+  UseCanonicalName Off
+</Virtualhost>
+
+Alias /phpmyadmin /usr/local/share/phpmyadmin
+<Directory /usr/local/share/phpmyadmin/>
+  Options Indexes FollowSymLinks MultiViews
+  AllowOverride All
+  <IfModule mod_authz_core.c>
+    Require all granted
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Allow from all
+  </IfModule>
+</Directory>
+```
 
 Customize in `~/.laptop.local`
 ------------------------------
