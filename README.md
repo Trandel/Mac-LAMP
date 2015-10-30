@@ -23,9 +23,9 @@ The apache config supports two levels of folder that can be accessed.
 
 Examples:
 
-`my-new-site.build => /User/USERNAME/Sites/my-new-site/`
-`site.client1.build => /User/USERNAME/Sites/client1/site/`
-`other-site.client2.build => /User/USERNAME/Sites/client2/other-site/`
+* `my-new-site.build => /User/USERNAME/Sites/my-new-site/`
+* `site.client1.build => /User/USERNAME/Sites/client1/site/`
+* `other-site.client2.build => /User/USERNAME/Sites/client2/other-site/`
 
 Note: To access phpMyAdmin append `/phpmyadmin` at the end of the url.
 
