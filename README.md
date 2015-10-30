@@ -18,11 +18,14 @@ Usage
 The script will aim to create an development environment inside this folder:
 `/User/USERNAME/Sites/`.
 
-Every folder you create inside can be accessed through `.localhost` domain.
+Every folder you create inside can be accessed through `.build` domain.
+The apache config supports two levels of folder that can be accessed.
 
-Example:
+Examples:
 
-`my-new-site.localhost => /User/USERNAME/Sites/my-new-site/`
+`my-new-site.build => /User/USERNAME/Sites/my-new-site/`
+`site.client1.build => /User/USERNAME/Sites/client1/site/`
+`other-site.client2.build => /User/USERNAME/Sites/client2/other-site/`
 
 Note: To access phpMyAdmin append `/phpmyadmin` at the end of the url.
 
@@ -103,6 +106,7 @@ What it sets up
 
 ### Tools (using brew cask)
 
+* [LaunchRocket] - `launchd` management
 * [Google Chrome] - browser
 * [Firefox] - browser
 * [Source Tree] - GIT client
@@ -110,6 +114,7 @@ What it sets up
 * [Sublime Text] - Text Editor
 * [Sequel Pro] - DB management
 
+[LaunchRocket]: https://github.com/jimbojsb/launchrocket
 [Google Chrome]: https://www.google.com/chrome/browser/desktop/index.html
 [Firefox]: https://www.mozilla.org/en-US/firefox/desktop/
 [Source Tree]: https://www.sourcetreeapp.com/
