@@ -86,7 +86,7 @@ What it sets up
 * [Node.js] and [NPM], for running apps and installing JavaScript packages
 * [Mysql] for storing relational data
 * [Ruby] stable for writing general-purpose code
-* [Dnsmasq] to configure .localhost domain
+* [Dnsmasq] to configure .local domain
 * [Phpmyadmin] for managing mysql databases
 * [Grunt] to run automated tasks
 * [Sass] to extend CSS for your projects
@@ -183,9 +183,9 @@ Alias /phpmyadmin /usr/local/share/phpmyadmin
 * `['AllowNoPassword']` will be set to `true`
 * `['host']` will be set to `127.0.0.1`
 
-#### New files for .localhost domain set up
-* `$(brew --prefix)/etc/dnsmasq.conf` will contain `address=/.localhost/127.0.0.1`
-* `$(brew --prefix)/etc/resolver/localhost` will contain `nameserver 127.0.0.1`
+#### New files for .local domain set up
+* `$(brew --prefix)/etc/dnsmasq.conf` will contain `address=/.local/127.0.0.1`
+* `/etc/resolver/local` will contain `nameserver 127.0.0.1\ndomain local\nsearch_order 1`
 
 Customize in `~/.laptop.local`
 ------------------------------
