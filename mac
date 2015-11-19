@@ -74,10 +74,10 @@ brew_launchctl_restart() {
   mkdir -p "$HOME/Library/LaunchAgents"
   ln -sfv "/usr/local/opt/$name/$plist" "$HOME/Library/LaunchAgents"
 
-  if launchctl list | grep -Fq "$domain"; then
-    launchctl unload "$HOME/Library/LaunchAgents/$plist" >/dev/null
+  if sudo launchctl list | grep -Fq "$domain"; then
+    sudo launchctl unload "$HOME/Library/LaunchAgents/$plist" >/dev/null
   fi
-  launchctl load "$HOME/Library/LaunchAgents/$plist" >/dev/null
+  sudo launchctl load "$HOME/Library/LaunchAgents/$plist" >/dev/null
 }
 
 gem_install_or_update() {
@@ -153,14 +153,14 @@ myConf="<Directory \"$mySitesDir\">
 
 <Virtualhost *:80>
   VirtualDocumentRoot \"$mySitesDir/%2/%1\"
-  ServerAlias *.*.build
+  ServerAlias *.*.local
   UseCanonicalName Off
 </Virtualhost>
 
 <Virtualhost *:80>
   VirtualDocumentRoot \"$mySitesDir/%1\"
-  ServerName sites.build
-  ServerAlias *.build
+  ServerName sites.local
+  ServerAlias *.local
   UseCanonicalName Off
 </Virtualhost>
 
@@ -189,12 +189,13 @@ fi
 
 sudo sh -c "echo '$myConf' > $myConfFile"
 
-sudo mkdir -p "$(brew --prefix)/etc/resolver"
-sudo sh -c "echo 'address=/.build/127.0.0.1' > $(brew --prefix)/etc/dnsmasq.conf"
-sudo sh -c "echo 'nameserver 127.0.0.1\ndomain build\nsearch_order 1' > /etc/resolver/build"
+sudo mkdir -p "/etc/resolver"
+sudo sh -c "echo 'address=/.local/127.0.0.1' > $(brew --prefix)/etc/dnsmasq.conf"
+sudo sh -c "echo 'nameserver 127.0.0.1\ndomain local\nsearch_order 1' > /etc/resolver/local"
 
 sudo sed -i '' 's/#LoadModule php5_module/LoadModule php5_module/g' /private/etc/apache2/httpd.conf
 sudo sed -i '' 's/#LoadModule vhost_alias_module/LoadModule vhost_alias_module/g' /private/etc/apache2/httpd.conf
+sudo sed -i '' 's/#LoadModule rewrite_module/LoadModule rewrite_module/g' /private/etc/apache2/httpd.conf
 sudo sed -i '' 's/Include \/private\/etc\/apache2\/users\/*.conf//g' /private/etc/apache2/httpd.conf
 sudo sh -c "echo 'Include /private/etc/apache2/users/*.conf' >> /private/etc/apache2/httpd.conf"
 
@@ -204,6 +205,8 @@ sudo sed -i '' "s/\['host'\] = 'localhost'/\['host'\] = '127.0.0.1'/g" $(brew --
 
 #apacheConf=`apachectl -V | grep -o 'SERVER_CONFIG_FILE=".*"'| sed 's/"//g' | sed 's/SERVER_CONFIG_FILE=//g'`
 #fancy_echo $apacheConf
+
+sudo chown -R _mysql:admin /usr/local/var/mysql
 
 #config startup
 brew_launchctl_restart 'mysql'

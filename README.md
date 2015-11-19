@@ -18,14 +18,14 @@ Usage
 The script will aim to create an development environment inside this folder:
 `/User/USERNAME/Sites/`.
 
-Every folder you create inside can be accessed through `.build` domain.
+Every folder you create inside can be accessed through `.local` domain.
 The apache config supports two levels of folder that can be accessed.
 
 Examples:
 
-* `my-new-site.build => /User/USERNAME/Sites/my-new-site/`
-* `site.client1.build => /User/USERNAME/Sites/client1/site/`
-* `other-site.client2.build => /User/USERNAME/Sites/client2/other-site/`
+* `my-new-site.local => /User/USERNAME/Sites/my-new-site/`
+* `site.client1.local => /User/USERNAME/Sites/client1/site/`
+* `other-site.client2.local => /User/USERNAME/Sites/client2/other-site/`
 
 Note: To access phpMyAdmin append `/phpmyadmin` at the end of the url.
 
@@ -70,6 +70,10 @@ Capitan due to permission changes to the /usr directory (within which the Homebr
 installation is typically located). See the [Homebrew El Capitan troubleshooting instructions](https://github.com/Homebrew/homebrew/blob/master/share/doc/homebrew/El_Capitan_and_Homebrew.md)
 for steps to resolve the permissions issues that interfere with Homebrew's
 installation.
+
+If your `.local` domain doesn't work try setting the [Dnsmasq] service to run with root privileges.
+
+![LaunchRocke Screenshot](/screenshots/launchrocket.png)
 
 What it sets up
 ---------------
@@ -130,6 +134,7 @@ What files it will create and change
 #### Changes to `/private/etc/apache2/httpd.conf`
 * Uncomment `#LoadModule php5_module`
 * Uncomment `#LoadModule vhost_alias_module`
+* Uncomment `#LoadModule rewrite_module`
 * New line `Include /private/etc/apache2/users/*.conf`
 
 #### Changes to `/private/etc/apache2/users/USERNAME.conf`
@@ -148,9 +153,15 @@ Contents of this file will be replaced by following config:
 </Directory>
 
 <Virtualhost *:80>
+  VirtualDocumentRoot "/Users/USERNAME/Sites/%2/%1"
+  ServerAlias *.*.local
+  UseCanonicalName Off
+</Virtualhost>
+
+<Virtualhost *:80>
   VirtualDocumentRoot "/Users/USERNAME/Sites/%1"
-  ServerName sites.localhost
-  ServerAlias *.localhost
+  ServerName sites.local
+  ServerAlias *.local
   UseCanonicalName Off
 </Virtualhost>
 
