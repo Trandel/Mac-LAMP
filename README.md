@@ -18,14 +18,14 @@ Usage
 The script will aim to create an development environment inside this folder:
 `/User/USERNAME/Sites/`.
 
-Every folder you create inside can be accessed through `.local` domain.
+Every folder you create inside can be accessed through `.mac` domain.
 The apache config supports two levels of folder that can be accessed.
 
 Examples:
 
-* `my-new-site.local => /User/USERNAME/Sites/my-new-site/`
-* `site.client1.local => /User/USERNAME/Sites/client1/site/`
-* `other-site.client2.local => /User/USERNAME/Sites/client2/other-site/`
+* `my-new-site.mac => /User/USERNAME/Sites/my-new-site/`
+* `site.client1.mac => /User/USERNAME/Sites/client1/site/`
+* `other-site.client2.mac => /User/USERNAME/Sites/client2/other-site/`
 
 Note: To access phpMyAdmin append `/phpmyadmin` at the end of the url.
 
@@ -71,7 +71,7 @@ installation is typically located). See the [Homebrew El Capitan troubleshooting
 for steps to resolve the permissions issues that interfere with Homebrew's
 installation.
 
-If your `.local` domain doesn't work try setting the [Dnsmasq] service to run with root privileges.
+If your `.mac` domain doesn't work try setting the [Dnsmasq] service to run with root privileges.
 
 ![LaunchRocke Screenshot](/screenshots/launchrocket.png)
 
@@ -154,14 +154,14 @@ Contents of this file will be replaced by following config:
 
 <Virtualhost *:80>
   VirtualDocumentRoot "/Users/USERNAME/Sites/%2/%1"
-  ServerAlias *.*.local
+  ServerAlias *.*.mac
   UseCanonicalName Off
 </Virtualhost>
 
 <Virtualhost *:80>
   VirtualDocumentRoot "/Users/USERNAME/Sites/%1"
-  ServerName sites.local
-  ServerAlias *.local
+  ServerName sites.mac
+  ServerAlias *.mac
   UseCanonicalName Off
 </Virtualhost>
 
@@ -183,9 +183,9 @@ Alias /phpmyadmin /usr/local/share/phpmyadmin
 * `['AllowNoPassword']` will be set to `true`
 * `['host']` will be set to `127.0.0.1`
 
-#### New files for .local domain set up
-* `$(brew --prefix)/etc/dnsmasq.conf` will contain `address=/.local/127.0.0.1`
-* `/etc/resolver/local` will contain `nameserver 127.0.0.1\ndomain local\nsearch_order 1`
+#### New files for .mac domain set up
+* `$(brew --prefix)/etc/dnsmasq.conf` will contain `address=/.mac/127.0.0.1`
+* `/etc/resolver/mac` will contain `nameserver 127.0.0.1\ndomain mac\nsearch_order 1`
 
 Customize in `~/.laptop.local`
 ------------------------------

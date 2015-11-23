@@ -74,10 +74,10 @@ brew_launchctl_restart() {
   mkdir -p "$HOME/Library/LaunchAgents"
   ln -sfv "/usr/local/opt/$name/$plist" "$HOME/Library/LaunchAgents"
 
-  if sudo launchctl list | grep -Fq "$domain"; then
-    sudo launchctl unload "$HOME/Library/LaunchAgents/$plist" >/dev/null
+  if launchctl list | grep -Fq "$domain"; then
+    launchctl unload "$HOME/Library/LaunchAgents/$plist" >/dev/null
   fi
-  sudo launchctl load "$HOME/Library/LaunchAgents/$plist" >/dev/null
+  launchctl load "$HOME/Library/LaunchAgents/$plist" >/dev/null
 }
 
 gem_install_or_update() {
@@ -153,14 +153,14 @@ myConf="<Directory \"$mySitesDir\">
 
 <Virtualhost *:80>
   VirtualDocumentRoot \"$mySitesDir/%2/%1\"
-  ServerAlias *.*.local
+  ServerAlias *.*.mac
   UseCanonicalName Off
 </Virtualhost>
 
 <Virtualhost *:80>
   VirtualDocumentRoot \"$mySitesDir/%1\"
-  ServerName sites.local
-  ServerAlias *.local
+  ServerName sites.mac
+  ServerAlias *.mac
   UseCanonicalName Off
 </Virtualhost>
 
@@ -190,8 +190,8 @@ fi
 sudo sh -c "echo '$myConf' > $myConfFile"
 
 sudo mkdir -p "/etc/resolver"
-sudo sh -c "echo 'address=/.local/127.0.0.1' > $(brew --prefix)/etc/dnsmasq.conf"
-sudo sh -c "echo 'nameserver 127.0.0.1\ndomain local\nsearch_order 1' > /etc/resolver/local"
+sudo sh -c "echo 'address=/.mac/127.0.0.1' > $(brew --prefix)/etc/dnsmasq.conf"
+sudo sh -c "echo 'nameserver 127.0.0.1\ndomain mac\nsearch_order 1' > /etc/resolver/mac"
 
 sudo sed -i '' 's/#LoadModule php5_module/LoadModule php5_module/g' /private/etc/apache2/httpd.conf
 sudo sed -i '' 's/#LoadModule vhost_alias_module/LoadModule vhost_alias_module/g' /private/etc/apache2/httpd.conf
