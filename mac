@@ -201,12 +201,14 @@ sudo sh -c "echo 'Include /private/etc/apache2/users/*.conf' >> /private/etc/apa
 
 #allow no password for phpmyadmin
 sudo sed -i '' "s/\['AllowNoPassword'\] = false/\['AllowNoPassword'\] = true/g" $(brew --prefix)/share/phpmyadmin/config.inc.php
-sudo sed -i '' "s/\['host'\] = 'localhost'/\['host'\] = '127.0.0.1'/g" $(brew --prefix)/share/phpmyadmin/config.inc.php
 
 #apacheConf=`apachectl -V | grep -o 'SERVER_CONFIG_FILE=".*"'| sed 's/"//g' | sed 's/SERVER_CONFIG_FILE=//g'`
 #fancy_echo $apacheConf
 
 sudo chown -R _mysql:admin /usr/local/var/mysql
+
+sudu mkdir /var/mysql
+sudo ln -s /tmp/mysql.sock /var/mysql/mysql.sock
 
 #config startup
 brew_launchctl_restart 'mysql'

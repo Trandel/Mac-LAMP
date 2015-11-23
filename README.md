@@ -181,7 +181,6 @@ Alias /phpmyadmin /usr/local/share/phpmyadmin
 
 #### Changes to `$(brew --prefix)/share/phpmyadmin/config.inc.php`
 * `['AllowNoPassword']` will be set to `true`
-* `['host']` will be set to `127.0.0.1`
 
 #### New files for .mac domain set up
 * `$(brew --prefix)/etc/dnsmasq.conf` will contain `address=/.mac/127.0.0.1`
