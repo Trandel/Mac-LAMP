@@ -207,7 +207,7 @@ sudo sed -i '' "s/\['AllowNoPassword'\] = false/\['AllowNoPassword'\] = true/g" 
 
 sudo chown -R _mysql:admin /usr/local/var/mysql
 
-sudu mkdir /var/mysql
+sudo mkdir /var/mysql
 sudo ln -s /tmp/mysql.sock /var/mysql/mysql.sock
 
 #config startup
