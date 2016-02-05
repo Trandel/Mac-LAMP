@@ -123,6 +123,10 @@ brew_install_or_upgrade 'phpmyadmin'
 
 npm install -g less
 npm install -g grunt-cli
+npm install -g bower
+npm install -g gulp
+npm install -g svgo
+
 
 fancy_echo "Updating and installing Ruby gems ..."
 
