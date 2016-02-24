@@ -119,6 +119,9 @@ brew_install_or_upgrade 'node'
 brew_install_or_upgrade 'imagemagick'
 brew_install_or_upgrade 'dnsmasq'
 brew_install_or_upgrade 'mysql'
+brew_install_or_upgrade 'mhash'
+brew_install_or_upgrade 'mcrypt'
+brew_install_or_upgrade 'php56-mcrypt'
 brew_install_or_upgrade 'phpmyadmin'
 
 npm install -g less
@@ -156,6 +159,12 @@ myConf="<Directory \"$mySitesDir\">
 </Directory>
 
 <Virtualhost *:80>
+  VirtualDocumentRoot \"$mySitesDir/%3/%2/%1\"
+  ServerAlias *.*.*.mac
+  UseCanonicalName Off
+</Virtualhost>
+
+<Virtualhost *:80>
   VirtualDocumentRoot \"$mySitesDir/%2/%1\"
   ServerAlias *.*.mac
   UseCanonicalName Off
@@ -191,7 +200,11 @@ if [ ! -d "$mySitesDir" ]; then
   mkdir "$mySitesDir"
 fi
 
+mkdir "$mySitesDir/test"
+
 sudo sh -c "echo '$myConf' > $myConfFile"
+
+sudo sh -c "echo '<?php phpinfo();' > $mySitesDir/test/index.php"
 
 sudo mkdir -p "/etc/resolver"
 sudo sh -c "echo 'address=/.mac/127.0.0.1' > $(brew --prefix)/etc/dnsmasq.conf"

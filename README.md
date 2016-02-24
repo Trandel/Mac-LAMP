@@ -19,13 +19,14 @@ The script will aim to create an development environment inside this folder:
 `/User/USERNAME/Sites/`.
 
 Every folder you create inside can be accessed through `.mac` domain.
-The apache config supports two levels of folder that can be accessed.
+The apache config supports three levels of folders that can be accessed.
 
 Examples:
 
 * `my-new-site.mac => /User/USERNAME/Sites/my-new-site/`
 * `site.client1.mac => /User/USERNAME/Sites/client1/site/`
 * `other-site.client2.mac => /User/USERNAME/Sites/client2/other-site/`
+* `public.other-site.client2.mac => /User/USERNAME/Sites/client2/other-site/public/`
 
 Note: To access phpMyAdmin append `/phpmyadmin` at the end of the url.
 
@@ -89,9 +90,12 @@ What it sets up
 * [Dnsmasq] to configure .local domain
 * [Phpmyadmin] for managing mysql databases
 * [Grunt] to run automated tasks
+* [Gulp] to run automated tasks
 * [Sass] to extend CSS for your projects
 * [Compass] to add additional funcions and mixins to [Sass]
 * [Less] as an alternative to [Sass]
+* [Svgo] tool for optimizing SVG
+* [Bower] web package manager
 * [Brew Cask] to install tools and link them to your Applications folder
 
 [Git]: https://git-scm.com/
@@ -103,9 +107,12 @@ What it sets up
 [Dnsmasq]: http://www.thekelleys.org.uk/dnsmasq/doc.html
 [Phpmyadmin]: http://www.phpmyadmin.net
 [Grunt]: http://gruntjs.com/
+[Gulp]: http://gulpjs.com/
 [Sass]: http://sass-lang.com/
 [Compass]: http://compass-style.org/
 [Less]: http://lesscss.org/
+[Svgo]: https://github.com/svg/svgo
+[Bower]: http://bower.io/
 [Brew Cask]: http://caskroom.io/
 
 ### Tools (using brew cask)
@@ -153,6 +160,12 @@ Contents of this file will be replaced by following config:
 </Directory>
 
 <Virtualhost *:80>
+  VirtualDocumentRoot "/Users/USERNAME/Sites/%3/%2/%1"
+  ServerAlias *.*.*.mac
+  UseCanonicalName Off
+</Virtualhost>
+
+<Virtualhost *:80>
   VirtualDocumentRoot "/Users/USERNAME/Sites/%2/%1"
   ServerAlias *.*.mac
   UseCanonicalName Off
@@ -185,6 +198,9 @@ Alias /phpmyadmin /usr/local/share/phpmyadmin
 #### New files for .mac domain set up
 * `$(brew --prefix)/etc/dnsmasq.conf` will contain `address=/.mac/127.0.0.1`
 * `/etc/resolver/mac` will contain `nameserver 127.0.0.1\ndomain mac\nsearch_order 1`
+* `/Users/USERNAME/Sites/test/index.php` will contain `<?php phpinfo();` to check if the `.mac` domain is working: [test.mac]
+
+[test.mac]: http://test.mac
 
 Customize in `~/.laptop.local`
 ------------------------------
