@@ -200,7 +200,9 @@ if [ ! -d "$mySitesDir" ]; then
   mkdir "$mySitesDir"
 fi
 
-mkdir "$mySitesDir/test"
+if [ ! -d "$mySitesDir/test" ]; then
+  mkdir "$mySitesDir/test"
+fi
 
 sudo sh -c "echo '$myConf' > $myConfFile"
 
@@ -224,7 +226,10 @@ sudo sed -i '' "s/\['AllowNoPassword'\] = false/\['AllowNoPassword'\] = true/g" 
 
 sudo chown -R _mysql:admin /usr/local/var/mysql
 
-sudo mkdir /var/mysql
+if [ ! -d "/var/mysql" ]; then
+  sudo mkdir "/var/mysql"
+fi
+
 sudo ln -s /tmp/mysql.sock /var/mysql/mysql.sock
 
 #config startup
