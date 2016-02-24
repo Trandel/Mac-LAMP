@@ -230,7 +230,7 @@ if [ ! -d "/var/mysql" ]; then
   sudo mkdir "/var/mysql"
 fi
 
-if [ ! -f "/var/mysql/mysql.sock" ]; then
+if [ ! -L "/var/mysql/mysql.sock" ]; then
   sudo ln -s /tmp/mysql.sock /var/mysql/mysql.sock
 fi
 
