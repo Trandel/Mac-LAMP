@@ -28,7 +28,7 @@ Examples:
 * `other-site.client2.mac => /User/USERNAME/Sites/client2/other-site/`
 * `public.other-site.client2.mac => /User/USERNAME/Sites/client2/other-site/public/`
 
-Note: To access phpMyAdmin append `/phpmyadmin` at the end of the url.
+Note: To access phpMyAdmin append `/phpmyadmin` at the end of the url. Username is root with no password.
 
 Requirements
 ------------
