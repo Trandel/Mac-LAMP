@@ -142,6 +142,7 @@ What files it will create and change
 * Uncomment `#LoadModule php5_module`
 * Uncomment `#LoadModule vhost_alias_module`
 * Uncomment `#LoadModule rewrite_module`
+* Change user `User USERNAME`
 * New line `Include /private/etc/apache2/users/*.conf`
 
 #### Changes to `/private/etc/apache2/users/USERNAME.conf`
