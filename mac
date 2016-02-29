@@ -215,6 +215,7 @@ sudo sh -c "echo 'nameserver 127.0.0.1\ndomain mac\nsearch_order 1' > /etc/resol
 sudo sed -i '' 's/#LoadModule php5_module/LoadModule php5_module/g' /private/etc/apache2/httpd.conf
 sudo sed -i '' 's/#LoadModule vhost_alias_module/LoadModule vhost_alias_module/g' /private/etc/apache2/httpd.conf
 sudo sed -i '' 's/#LoadModule rewrite_module/LoadModule rewrite_module/g' /private/etc/apache2/httpd.conf
+sudo sed -i '' "s/User _www/User $me/g" /private/etc/apache2/httpd.conf
 sudo sed -i '' 's/Include \/private\/etc\/apache2\/users\/*.conf//g' /private/etc/apache2/httpd.conf
 sudo sh -c "echo 'Include /private/etc/apache2/users/*.conf' >> /private/etc/apache2/httpd.conf"
 
