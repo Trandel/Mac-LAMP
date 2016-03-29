@@ -146,7 +146,9 @@ me=$(whoami)
 myConfFile="/private/etc/apache2/users/$me.conf"
 mySitesDir="$HOME/Sites"
 
-myConf="<Directory \"$mySitesDir\">
+myConf="DocumentRoot \"$mySitesDir\"
+
+<Directory \"$mySitesDir\">
   Options Indexes MultiViews FollowSymLinks
   AllowOverride All
   <IfModule mod_authz_core.c>

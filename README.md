@@ -148,6 +148,8 @@ What files it will create and change
 #### Changes to `/private/etc/apache2/users/USERNAME.conf`
 Contents of this file will be replaced by following config:
 ```ApacheConf
+DocumentRoot"/Users/USERNAME/Sites"
+
 <Directory "/Users/USERNAME/Sites">
   Options Indexes MultiViews FollowSymLinks
   AllowOverride All
